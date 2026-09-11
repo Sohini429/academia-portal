@@ -1,0 +1,38 @@
+[
+  {
+    "id": "SKL-101",
+    "canonical_name": "Python",
+    "category": "Programming Language",
+    "aliases": ["py", "python3", "python 3"]
+  },
+  {
+    "id": "SKL-102",
+    "canonical_name": "Machine Learning",
+    "category": "AI/ML",
+    "aliases": ["ml", "machine-learning"]
+  },
+  {
+    "id": "SKL-103",
+    "canonical_name": "SQL",
+    "category": "Database",
+    "aliases": ["structured query language", "postgresql queries", "mysql queries"]
+  },
+  {
+    "id": "SKL-104",
+    "canonical_name": "React.js",
+    "category": "Frontend",
+    "aliases": ["react", "reactjs"]
+  },
+  {
+    "id": "SKL-105",
+    "canonical_name": "FastAPI",
+    "category": "Backend",
+    "aliases": ["fast api"]
+  },
+  {
+    "id": "SKL-106",
+    "canonical_name": "Data Analysis",
+    "category": "Analytics",
+    "aliases": ["data analytics", "data-analysis"]
+  }
+]
