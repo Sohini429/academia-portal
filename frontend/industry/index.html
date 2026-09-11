@@ -1,0 +1,475 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Enter Acadimia // Industry Portal</title>
+    <meta name="description" content="Sign in to the Acadimia industry partner portal." />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+        href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Manrope:wght@400;500;600;700;800&display=swap"
+        rel="stylesheet" />
+    <style>
+        :root {
+            --ink: #102331;
+            --muted: #6b7c86;
+            --paper: #f3f7f4;
+            --line: rgba(16, 35, 49, .12);
+            --lime: #d7ff67;
+            --mint: #baf4d0;
+            --blue: #8ed7f6;
+            --coral: #ff8d71;
+            --shadow: 0 30px 80px rgba(35, 65, 72, .14);
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        html,
+        body {
+            min-height: 100%;
+        }
+
+        body {
+            margin: 0;
+            overflow-x: hidden;
+            color: var(--ink);
+            background: var(--paper);
+            font-family: Manrope, sans-serif;
+        }
+
+        button,
+        input {
+            font: inherit;
+        }
+
+        button {
+            border: 0;
+            cursor: pointer;
+        }
+
+        .mono {
+            font: 500 11px 'DM Mono', monospace;
+            letter-spacing: .08em;
+            text-transform: uppercase;
+        }
+
+        .page {
+            position: relative;
+            min-height: 100vh;
+            display: grid;
+            place-items: center;
+            padding: 95px 30px 40px;
+            isolation: isolate;
+        }
+
+        .page::before {
+            position: absolute;
+            inset: 0;
+            z-index: -2;
+            background: linear-gradient(125deg, #f3f7f4, #eef7f0 48%, #e8f2f4);
+            content: '';
+        }
+
+        .page::after {
+            position: absolute;
+            right: -15vw;
+            bottom: -32vw;
+            z-index: -1;
+            width: 58vw;
+            height: 58vw;
+            border: 1px solid rgba(86, 154, 127, .23);
+            border-radius: 50%;
+            box-shadow: 0 0 0 70px rgba(86, 154, 127, .05), 0 0 0 140px rgba(86, 154, 127, .03);
+            animation: orbit 18s linear infinite;
+            content: '';
+        }
+
+        .grid {
+            position: absolute;
+            inset: 0;
+            z-index: -1;
+            opacity: .35;
+            background-image: linear-gradient(rgba(16, 35, 49, .045) 1px, transparent 1px), linear-gradient(90deg, rgba(16, 35, 49, .045) 1px, transparent 1px);
+            background-size: 44px 44px;
+            mask-image: linear-gradient(120deg, black, transparent 65%);
+        }
+
+        .brand {
+            position: absolute;
+            top: 30px;
+            left: 36px;
+            display: flex;
+            align-items: center;
+            gap: 11px;
+            color: var(--ink);
+            font-size: 17px;
+            font-weight: 800;
+            letter-spacing: -.06em;
+            text-decoration: none;
+        }
+
+        .brand-mark {
+            width: 27px;
+            height: 27px;
+            display: grid;
+            place-items: center;
+            background: var(--lime);
+            border-radius: 50% 50% 50% 4px;
+            transform: rotate(-21deg);
+        }
+
+        .brand-mark span {
+            transform: rotate(21deg);
+        }
+
+        .back {
+            position: absolute;
+            top: 37px;
+            right: 36px;
+            color: var(--muted);
+            text-decoration: none;
+        }
+
+        .back:hover {
+            color: var(--ink);
+        }
+
+        .layout {
+            width: min(100%, 1030px);
+            display: grid;
+            grid-template-columns: minmax(280px, .9fr) minmax(360px, .82fr);
+            gap: clamp(45px, 8vw, 115px);
+            align-items: center;
+        }
+
+        .intro {
+            animation: rise .8s .2s both;
+        }
+
+        .eyebrow {
+            margin-bottom: 18px;
+            color: var(--coral);
+        }
+
+        h1 {
+            max-width: 500px;
+            margin: 0 0 19px;
+            font-size: clamp(42px, 5.5vw, 70px);
+            line-height: .94;
+            letter-spacing: -.08em;
+        }
+
+        h1 em {
+            color: #6da989;
+            font-style: normal;
+        }
+
+        .copy {
+            max-width: 410px;
+            margin: 0;
+            color: var(--muted);
+            font-size: 14px;
+            line-height: 1.75;
+        }
+
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1px;
+            max-width: 390px;
+            margin-top: 45px;
+            background: var(--line);
+        }
+
+        .stat {
+            padding: 17px;
+            background: rgba(255, 255, 255, .55);
+        }
+
+        .stat b {
+            display: block;
+            margin-bottom: 5px;
+            font-size: 22px;
+            letter-spacing: -.06em;
+        }
+
+        .stat span {
+            color: var(--muted);
+            font-size: 10px;
+        }
+
+        .card {
+            padding: 34px;
+            background: rgba(255, 255, 255, .84);
+            border: 1px solid rgba(255, 255, 255, .85);
+            border-radius: 13px;
+            box-shadow: var(--shadow);
+            backdrop-filter: blur(18px);
+            animation: rise .8s .35s both;
+        }
+
+        .heading {
+            display: flex;
+            align-items: start;
+            justify-content: space-between;
+            margin-bottom: 32px;
+        }
+
+        h2 {
+            margin: 0 0 7px;
+            font-size: 23px;
+            letter-spacing: -.06em;
+        }
+
+        .heading p {
+            margin: 0;
+            color: var(--muted);
+            font-size: 11px;
+        }
+
+        .lock {
+            width: 34px;
+            height: 34px;
+            display: grid;
+            place-items: center;
+            background: var(--mint);
+            border-radius: 50%;
+        }
+
+        .field {
+            display: grid;
+            gap: 8px;
+            margin-bottom: 18px;
+        }
+
+        label {
+            color: var(--muted);
+            font: 500 10px 'DM Mono', monospace;
+            letter-spacing: .06em;
+            text-transform: uppercase;
+        }
+
+        input {
+            width: 100%;
+            padding: 13px 14px;
+            color: var(--ink);
+            background: rgba(243, 247, 244, .75);
+            border: 1px solid var(--line);
+            border-radius: 5px;
+            outline: none;
+            font-size: 13px;
+        }
+
+        input:focus {
+            background: #fff;
+            border-color: #87b79a;
+            box-shadow: 0 0 0 3px rgba(135, 183, 154, .15);
+        }
+
+        .row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 10px;
+            margin: 3px 0 25px;
+        }
+
+        .remember {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--muted);
+            font: 11px Manrope, sans-serif;
+            letter-spacing: 0;
+            text-transform: none;
+        }
+
+        .remember input {
+            width: 13px;
+            height: 13px;
+            accent-color: var(--ink);
+        }
+
+        .forgot {
+            color: var(--muted);
+            font-size: 11px;
+        }
+
+        .forgot:hover {
+            color: var(--coral);
+        }
+
+        .submit,
+        .sso {
+            width: 100%;
+            padding: 14px;
+            border-radius: 5px;
+            font-size: 12px;
+            font-weight: 700;
+        }
+
+        .submit {
+            color: white;
+            background: var(--ink);
+            transition: transform .2s, background .2s;
+        }
+
+        .submit:hover {
+            background: #1d3a4b;
+            transform: translateY(-2px);
+        }
+
+        .divider {
+            display: flex;
+            align-items: center;
+            gap: 11px;
+            margin: 24px 0 18px;
+            color: #9aa9ad;
+        }
+
+        .divider::before,
+        .divider::after {
+            flex: 1;
+            border-top: 1px solid var(--line);
+            content: '';
+        }
+
+        .sso {
+            color: var(--ink);
+            background: white;
+            border: 1px solid var(--line);
+        }
+
+        .sso:hover {
+            background: var(--blue);
+            border-color: var(--blue);
+        }
+
+        .message {
+            min-height: 17px;
+            margin: 15px 0 0;
+            color: var(--coral);
+            font-size: 11px;
+        }
+
+        .terms {
+            margin: 24px 0 0;
+            color: #8b999e;
+            font-size: 10px;
+            line-height: 1.6;
+            text-align: center;
+        }
+
+        .terms a {
+            color: var(--muted);
+        }
+
+        @keyframes rise {
+            from {
+                opacity: 0;
+                transform: translateY(18px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes orbit {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        @media (max-width: 760px) {
+            .page {
+                display: block;
+                padding: 92px 22px 35px;
+            }
+
+            .page::after {
+                display: none;
+            }
+
+            .brand {
+                top: 25px;
+                left: 22px;
+            }
+
+            .back {
+                top: 31px;
+                right: 22px;
+            }
+
+            .layout {
+                display: block;
+            }
+
+            .intro {
+                margin-bottom: 35px;
+            }
+
+            .card {
+                max-width: 520px;
+                margin: auto;
+                padding: 27px 22px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <main class="page">
+        <div class="grid"></div>
+        <a class="back mono" href="../Index.html">Student portal ↗</a>
+        <a class="brand" href="menu.html" aria-label="Acadimia industry portal"><span
+                class="brand-mark"><span>✦</span></span><strong>acadimia / industry</strong></a>
+
+        <div class="layout">
+            <section class="intro">
+                <div class="eyebrow mono">Industry signal / partner portal</div>
+                <h1>Build the future with <em>better signals.</em></h1>
+                <p class="copy">Connect your team with the academic talent, emerging research, and ambitious ideas ready
+                    to move your industry forward.</p>
+                <div class="stats">
+                    <div class="stat"><b>2.4k</b><span>Active talent signals</span></div>
+                    <div class="stat"><b>86%</b><span>Partner match quality</span></div>
+                </div>
+            </section>
+            <section class="card" aria-labelledby="login-heading">
+                <div class="heading">
+                    <div>
+                        <h2 id="login-heading">Enter industry portal</h2>
+                        <p>Continue building what comes next.</p>
+                    </div>
+                    <div class="lock">⌁</div>
+                </div>
+                <form id="industry-login">
+                    <div class="field"><label for="email">Work email</label><input id="email" type="email"
+                            placeholder="you@company.com" autocomplete="email" required /></div>
+                    <div class="field"><label for="password">Passcode</label><input id="password" type="password"
+                            placeholder="Enter your passcode" autocomplete="current-password" required /></div>
+                    <div class="row"><label class="remember"><input type="checkbox" checked /> Keep me
+                            connected</label><a class="forgot" href="#">Forgot passcode?</a></div>
+                    <button class="submit" type="submit">Enter industry portal <span>→</span></button>
+                </form>
+                <div class="divider mono">or</div>
+                <button class="sso" id="sso-button" type="button">Continue with company SSO</button>
+                <p class="message" id="message" role="status"></p>
+                <p class="terms">By continuing, you agree to the <a href="#">Acadimia partner terms</a>.</p>
+            </section>
+        </div>
+    </main>
+    <script>
+        const login = () => { document.querySelector('#message').textContent = 'Opening your industry workspace...'; setTimeout(() => { window.location.href = 'menu.html'; }, 700); };
+        document.querySelector('#industry-login').addEventListener('submit', (event) => { event.preventDefault(); if (event.currentTarget.reportValidity()) login(); });
+        document.querySelector('#sso-button').addEventListener('click', login);
+    </script>
+</body>
+
+</html>
