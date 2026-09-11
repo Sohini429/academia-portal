@@ -1,0 +1,681 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Enter Acadimia // Industry Portal</title>
+    <meta name="description" content="Sign in to your Acadimia industry portal." />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+        href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Manrope:wght@400;500;600;700;800&display=swap"
+        rel="stylesheet" />
+    <style>
+        :root {
+            --ink: #102331;
+            --muted: #6b7c86;
+            --paper: #f3f7f4;
+            --line: rgba(16, 35, 49, .12);
+            --lime: #d7ff67;
+            --mint: #baf4d0;
+            --blue: #8ed7f6;
+            --coral: #ff8d71;
+            --shadow: 0 30px 80px rgba(35, 65, 72, .14);
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        html,
+        body {
+            min-height: 100%;
+        }
+
+        body {
+            margin: 0;
+            overflow-x: hidden;
+            color: var(--ink);
+            background: var(--paper);
+            font-family: Manrope, sans-serif;
+        }
+
+        button,
+        input {
+            font: inherit;
+        }
+
+        button {
+            border: 0;
+            cursor: pointer;
+        }
+
+        .mono {
+            font: 500 11px 'DM Mono', monospace;
+            letter-spacing: .08em;
+            text-transform: uppercase;
+        }
+
+        .login-page {
+            position: relative;
+            min-height: 100vh;
+            display: grid;
+            place-items: center;
+            padding: 30px;
+            isolation: isolate;
+        }
+
+        .login-page::before {
+            position: absolute;
+            inset: 0;
+            z-index: -2;
+            background: linear-gradient(125deg, #f3f7f4 0%, #eef7f0 48%, #e8f2f4 100%);
+            content: '';
+        }
+
+        .login-page::after {
+            position: absolute;
+            right: -15vw;
+            bottom: -32vw;
+            z-index: -1;
+            width: 58vw;
+            height: 58vw;
+            border: 1px solid rgba(86, 154, 127, .23);
+            border-radius: 50%;
+            box-shadow: 0 0 0 70px rgba(86, 154, 127, .05), 0 0 0 140px rgba(86, 154, 127, .03);
+            animation: orbit 18s linear infinite;
+            content: '';
+        }
+
+        .grid-glow {
+            position: absolute;
+            inset: 0;
+            z-index: -1;
+            opacity: .35;
+            background-image: linear-gradient(rgba(16, 35, 49, .045) 1px, transparent 1px), linear-gradient(90deg, rgba(16, 35, 49, .045) 1px, transparent 1px);
+            background-size: 44px 44px;
+            mask-image: linear-gradient(120deg, black, transparent 65%);
+        }
+
+        .brand {
+            position: absolute;
+            top: 30px;
+            left: 36px;
+            display: flex;
+            align-items: center;
+            gap: 11px;
+            font-size: 17px;
+            font-weight: 800;
+            letter-spacing: -.06em;
+        }
+
+        .brand-mark {
+            width: 27px;
+            height: 27px;
+            display: grid;
+            place-items: center;
+            color: var(--ink);
+            background: var(--lime);
+            border-radius: 50% 50% 50% 4px;
+            transform: rotate(-21deg);
+        }
+
+        .brand-mark span {
+            transform: rotate(21deg);
+            font-size: 14px;
+        }
+
+        .back-link {
+            position: absolute;
+            top: 37px;
+            right: 36px;
+            color: var(--muted);
+            text-decoration: none;
+            transition: color .2s, transform .2s;
+        }
+
+        .back-link:hover {
+            color: var(--ink);
+            transform: translateX(-3px);
+        }
+
+        .login-layout {
+            width: min(100%, 1030px);
+            display: grid;
+            grid-template-columns: minmax(280px, .9fr) minmax(360px, .82fr);
+            gap: clamp(45px, 8vw, 115px);
+            align-items: center;
+            padding-top: 30px;
+        }
+
+        .intro {
+            animation: rise .8s .2s both;
+        }
+
+        .eyebrow {
+            margin-bottom: 18px;
+            color: var(--coral);
+        }
+
+        h1 {
+            max-width: 470px;
+            margin: 0 0 19px;
+            font-size: clamp(42px, 5.5vw, 70px);
+            line-height: .94;
+            letter-spacing: -.08em;
+        }
+
+        h1 em {
+            color: #6da989;
+            font-style: normal;
+        }
+
+        .intro-copy {
+            max-width: 390px;
+            margin: 0;
+            color: var(--muted);
+            font-size: 14px;
+            line-height: 1.75;
+        }
+
+        .signal-map {
+            position: relative;
+            width: min(100%, 390px);
+            height: 155px;
+            margin-top: 45px;
+            overflow: hidden;
+            border-top: 1px solid var(--line);
+        }
+
+        .signal-map::before,
+        .signal-map::after {
+            position: absolute;
+            top: 27px;
+            left: 15px;
+            width: 100px;
+            height: 100px;
+            border: 1px solid rgba(86, 154, 127, .35);
+            border-radius: 50%;
+            content: '';
+        }
+
+        .signal-map::after {
+            width: 61px;
+            height: 61px;
+            top: 46px;
+            left: 34px;
+        }
+
+        .signal-line {
+            position: absolute;
+            top: 77px;
+            left: 0;
+            width: 250px;
+            border-top: 1px dashed rgba(86, 154, 127, .42);
+            transform: rotate(-29deg);
+            transform-origin: left;
+        }
+
+        .signal-dot {
+            position: absolute;
+            top: 73px;
+            left: 77px;
+            width: 10px;
+            height: 10px;
+            background: var(--coral);
+            border: 3px solid var(--paper);
+            border-radius: 50%;
+            box-shadow: 0 0 0 6px rgba(255, 141, 113, .2);
+            animation: beacon 2.4s ease-in-out infinite;
+        }
+
+        .signal-note {
+            position: absolute;
+            top: 41px;
+            left: 151px;
+            color: #73a087;
+        }
+
+        .login-card {
+            position: relative;
+            padding: 34px;
+            background: rgba(255, 255, 255, .84);
+            border: 1px solid rgba(255, 255, 255, .85);
+            border-radius: 13px;
+            overflow: hidden;
+            backdrop-filter: blur(18px);
+            animation: rise .8s .35s both;
+        }
+
+        .card-heading {
+            display: flex;
+            align-items: start;
+            justify-content: space-between;
+            margin-bottom: 32px;
+        }
+
+        .card-heading h2 {
+            margin: 0 0 7px;
+            font-size: 23px;
+            letter-spacing: -.06em;
+        }
+
+        .card-heading p {
+            margin: 0;
+            color: var(--muted);
+            font-size: 11px;
+        }
+
+        .lock {
+            width: 34px;
+            height: 34px;
+            display: grid;
+            place-items: center;
+            background: var(--mint);
+            border-radius: 50%;
+            font-size: 15px;
+        }
+
+        .field {
+            display: grid;
+            gap: 8px;
+            margin-bottom: 18px;
+        }
+
+        label {
+            color: var(--muted);
+            font: 500 10px 'DM Mono', monospace;
+            letter-spacing: .06em;
+            text-transform: uppercase;
+        }
+
+        input {
+            width: 100%;
+            padding: 13px 14px;
+            color: var(--ink);
+            background: rgba(243, 247, 244, .75);
+            border: 1px solid var(--line);
+            border-radius: 5px;
+            outline: none;
+            font-size: 13px;
+            transition: border .2s, box-shadow .2s, background .2s;
+        }
+
+        input:focus {
+            background: #fff;
+            border-color: #87b79a;
+            box-shadow: 0 0 0 3px rgba(135, 183, 154, .15);
+        }
+
+        .form-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 10px;
+            margin: 3px 0 25px;
+        }
+
+        .remember {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--muted);
+            font-size: 11px;
+        }
+
+        .remember input {
+            width: 13px;
+            height: 13px;
+            accent-color: var(--ink);
+        }
+
+        .forgot {
+            color: var(--muted);
+            font-size: 11px;
+            text-decoration: none;
+        }
+
+        .forgot:hover {
+            color: var(--coral);
+        }
+
+        .submit {
+            width: 100%;
+            padding: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 9px;
+            color: white;
+            background: var(--ink);
+            border-radius: 5px;
+            font-size: 12px;
+            font-weight: 700;
+            transition: transform .2s, box-shadow .2s, background .2s;
+        }
+
+        .submit:hover {
+            background: #1d3a4b;
+            box-shadow: 0 10px 22px rgba(16, 35, 49, .2);
+            transform: translateY(-2px);
+        }
+
+        .submit .submit-arrow {
+            font-size: 17px;
+            transition: transform .2s;
+        }
+
+        .submit:hover .submit-arrow {
+            transform: translateX(4px);
+        }
+
+        .divider {
+            display: flex;
+            align-items: center;
+            gap: 11px;
+            margin: 24px 0 18px;
+            color: #9aa9ad;
+        }
+
+        .divider::before,
+        .divider::after {
+            flex: 1;
+            border-top: 1px solid var(--line);
+            content: '';
+        }
+
+        .sso {
+            width: 100%;
+            padding: 12px;
+            color: var(--ink);
+            background: white;
+            border: 1px solid var(--line);
+            border-radius: 5px;
+            font-size: 11px;
+            transition: border .2s, background .2s;
+        }
+
+        .sso:hover {
+            background: var(--blue);
+            border-color: var(--blue);
+        }
+
+        .terms {
+            margin: 24px 0 0;
+            color: #8b999e;
+            font-size: 10px;
+            line-height: 1.6;
+            text-align: center;
+        }
+
+        .terms a {
+            color: var(--muted);
+        }
+
+        .loading-screen {
+            position: fixed;
+            inset: 0;
+            z-index: 20;
+            display: grid;
+            place-items: center;
+            color: white;
+            background: var(--ink);
+            transition: opacity .7s, visibility .7s;
+        }
+
+        .loading-screen.is-done {
+            opacity: 0;
+            visibility: hidden;
+            pointer-events: none;
+        }
+
+        .loading-core {
+            position: relative;
+            width: 180px;
+            height: 180px;
+            display: grid;
+            place-items: center;
+        }
+
+        .loading-core::before,
+        .loading-core::after {
+            position: absolute;
+            width: 110px;
+            height: 110px;
+            border: 1px solid rgba(215, 255, 103, .5);
+            border-radius: 50%;
+            content: '';
+            animation: loaderOrbit 2.2s linear infinite;
+        }
+
+        .loading-core::after {
+            width: 160px;
+            height: 160px;
+            border-color: rgba(142, 215, 246, .23);
+            animation-direction: reverse;
+            animation-duration: 3.5s;
+        }
+
+        .loading-mark {
+            width: 41px;
+            height: 41px;
+            display: grid;
+            place-items: center;
+            color: var(--ink);
+            background: var(--lime);
+            border-radius: 50% 50% 50% 5px;
+            transform: rotate(-21deg);
+            animation: markFloat 1.5s ease-in-out infinite;
+        }
+
+        .loading-mark span {
+            transform: rotate(21deg);
+        }
+
+        .loading-copy {
+            position: absolute;
+            top: calc(50% + 115px);
+            left: 0;
+            width: 100%;
+            color: rgba(255, 255, 255, .57);
+            text-align: center;
+        }
+
+        .loading-copy b {
+            display: block;
+            margin-bottom: 8px;
+            color: white;
+            font: 500 11px 'DM Mono', monospace;
+            letter-spacing: .08em;
+            text-transform: uppercase;
+        }
+
+        .loading-bar {
+            width: 145px;
+            height: 2px;
+            margin: auto;
+            overflow: hidden;
+            background: rgba(255, 255, 255, .18);
+        }
+
+        .loading-bar i {
+            display: block;
+            width: 45%;
+            height: 100%;
+            background: var(--lime);
+            animation: loadBar 1.45s ease-in-out infinite;
+        }
+
+        @keyframes rise {
+            from {
+                opacity: 0;
+                transform: translateY(18px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes orbit {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        @keyframes loaderOrbit {
+            to {
+                transform: rotate(360deg) scale(1.05);
+            }
+        }
+
+        @keyframes markFloat {
+            50% {
+                transform: rotate(-21deg) translateY(-6px);
+            }
+        }
+
+        @keyframes loadBar {
+            0% {
+                transform: translateX(-160%);
+            }
+
+            100% {
+                transform: translateX(340%);
+            }
+        }
+
+        @keyframes beacon {
+            50% {
+                box-shadow: 0 0 0 10px rgba(255, 141, 113, 0);
+            }
+        }
+
+        @media (max-width: 760px) {
+            .login-page::after {
+                display: none;
+            }
+
+            .login-page {
+                display: block;
+                padding: 92px 22px 35px;
+            }
+
+            .brand {
+                top: 25px;
+                left: 22px;
+            }
+
+            .back-link {
+                top: 31px;
+                right: 22px;
+            }
+
+            .login-layout {
+                display: block;
+                padding: 0;
+            }
+
+            .intro {
+                margin-bottom: 35px;
+            }
+
+            .intro-copy {
+                max-width: 430px;
+            }
+
+            .signal-map {
+                display: none;
+            }
+
+            .login-card {
+                max-width: 520px;
+                margin: auto;
+                padding: 27px 22px;
+            }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+
+            *,
+            *::before,
+            *::after {
+                animation-duration: .01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: .01ms !important;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="loading-screen" id="loading-screen" aria-label="Loading Acadimia">
+        <div class="loading-core">
+            <div class="loading-mark"><span>✦</span></div>
+            <div class="loading-copy"><b>Calibrating your signal</b>
+                <div class="loading-bar"><i></i></div>
+            </div>
+        </div>
+    </div>
+
+    <main class="login-page">
+        <div class="grid-glow"></div>
+        <a class="brand" href="Index.html" aria-label="Acadimia home"><span
+                class="brand-mark"><span>✦</span></span><strong>acadimia</strong></a>
+        <a class="back-link mono" href="Index.html">Back to portal ↗</a>
+        <div class="login-layout">
+            <section class="intro">
+                <div class="eyebrow mono">The portal is open</div>
+                <h1>Welcome back to what comes <em>next.</em></h1>
+                <p class="intro-copy">Reconnect with the people, problems, and possibilities shaping the world beyond
+                    the classroom.</p>
+                <div class="signal-map" aria-hidden="true">
+                    <div class="signal-line"></div>
+                    <div class="signal-dot"></div>
+                    <div class="signal-note mono">Your signal / waiting</div>
+                </div>
+            </section>
+
+            <section class="login-card" aria-labelledby="login-heading">
+                <div class="card-heading">
+                    <div>
+                        <h2 id="login-heading">Enter your workspace</h2>
+                        <p>Continue your trajectory.</p>
+                    </div>
+                    <div class="lock">⌁</div>
+                </div>
+                <form id="login-form">
+                    <div class="field"><label for="email">Academic email</label><input id="email" name="email"
+                            type="email" autocomplete="email" placeholder="you@university.edu" required /></div>
+                    <div class="field"><label for="password">Passcode</label><input id="password" name="password"
+                            type="password" autocomplete="current-password" placeholder="Enter your passcode"
+                            required /></div>
+                    <div class="form-row"><label class="remember"><input type="checkbox" checked /> Keep me
+                            connected</label><a class="forgot" href="#">Forgot passcode?</a></div>
+                    <button class="submit" type="submit">Enter Acadimia <span class="submit-arrow">→</span></button>
+                </form>
+                <div class="divider mono">or</div>
+                <button class="sso" type="button" id="sso-button">Continue with university SSO</button>
+                <p class="terms">By continuing, you agree to the <a href="#">Acadimia terms</a> and <a href="#">privacy
+                        signal</a>.</p>
+            </section>
+        </div>
+    </main>
+
+    <script>
+        const loadingScreen = document.querySelector('#loading-screen');
+        const form = document.querySelector('#login-form');
+        const ssoButton = document.querySelector('#sso-button');
+        const enterPortal = () => {
+            loadingScreen.classList.remove('is-done');
+            setTimeout(() => { window.location.href = 'Index.html'; }, 1100);
+        };
+        window.addEventListener('load', () => setTimeout(() => loadingScreen.classList.add('is-done'), 1650));
+        form.addEventListener('submit', (event) => { event.preventDefault(); if (form.reportValidity()) enterPortal(); });
+        ssoButton.addEventListener('click', enterPortal);
+    </script>
+</body>
+
+</html>
