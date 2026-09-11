@@ -1,0 +1,1755 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Acadimia // Industry Portal</title>
+    <meta name="description" content="Acadimia connects ambitious academic talent with the teams building tomorrow." />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+        href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Manrope:wght@400;500;600;700;800&display=swap"
+        rel="stylesheet" />
+    <style>
+        :root {
+            --ink: #102331;
+            --muted: #6b7c86;
+            --paper: #f3f7f4;
+            --panel: rgba(255, 255, 255, .78);
+            --line: rgba(16, 35, 49, .11);
+            --mint: #baf4d0;
+            --lime: #d7ff67;
+            --blue: #8ed7f6;
+            --coral: #ff8d71;
+            --purple: #bba7ff;
+            --shadow: 0 24px 65px rgba(35, 65, 72, .11);
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            margin: 0;
+            color: var(--ink);
+            background: var(--paper);
+            font-family: Manrope, sans-serif;
+            overflow-x: hidden;
+        }
+
+        button,
+        input {
+            font: inherit;
+        }
+
+        button {
+            border: 0;
+            cursor: pointer;
+        }
+
+        .mono {
+            font: 500 11px 'DM Mono', monospace;
+            letter-spacing: .08em;
+            text-transform: uppercase;
+        }
+
+        .shell {
+            display: grid;
+            grid-template-columns: 245px 1fr;
+            min-height: 100vh;
+        }
+
+        aside {
+            position: sticky;
+            top: 0;
+            height: 100vh;
+            padding: 31px 22px 25px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            border-right: 1px solid var(--line);
+            background: rgba(243, 247, 244, .7);
+            backdrop-filter: blur(20px);
+            z-index: 10;
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 11px;
+            margin: 0 10px 70px;
+            font-size: 17px;
+            font-weight: 800;
+            letter-spacing: -.06em;
+        }
+
+        .brand-mark {
+            width: 27px;
+            height: 27px;
+            display: grid;
+            place-items: center;
+            color: var(--ink);
+            background: var(--lime);
+            border-radius: 50% 50% 50% 4px;
+            transform: rotate(-21deg);
+        }
+
+        .brand-mark span {
+            transform: rotate(21deg);
+            font-size: 14px;
+        }
+
+        .nav-label {
+            padding: 0 12px 13px;
+            color: #9aa9ad;
+        }
+
+        nav {
+            display: grid;
+            gap: 5px;
+        }
+
+        .nav-item {
+            position: relative;
+            display: flex;
+            align-items: center;
+            gap: 13px;
+            width: 100%;
+            padding: 12px;
+            color: var(--muted);
+            background: transparent;
+            border-radius: 9px;
+            text-align: left;
+            transition: color .25s, background .25s, transform .25s;
+        }
+
+        .nav-item:hover {
+            color: var(--ink);
+            transform: translateX(3px);
+        }
+
+        .nav-item.active {
+            color: var(--ink);
+            background: #fff;
+            box-shadow: 0 9px 20px rgba(49, 83, 85, .06);
+        }
+
+        .nav-item.active::before {
+            position: absolute;
+            left: -22px;
+            width: 3px;
+            height: 19px;
+            background: var(--coral);
+            border-radius: 0 3px 3px 0;
+            content: '';
+        }
+
+        .nav-icon {
+            width: 17px;
+            height: 17px;
+            display: inline-grid;
+            place-items: center;
+            font-size: 16px;
+        }
+
+        .side-foot {
+            display: grid;
+            gap: 17px;
+        }
+
+        .status {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 11px 12px;
+            color: var(--muted);
+            border: 1px solid var(--line);
+            border-radius: 8px;
+            background: rgba(255, 255, 255, .5);
+            font-size: 11px;
+        }
+
+        .pulse {
+            width: 7px;
+            height: 7px;
+            background: #54d88c;
+            border-radius: 50%;
+            box-shadow: 0 0 0 0 rgba(84, 216, 140, .7);
+            animation: pulse 2s infinite;
+        }
+
+        .profile {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .avatar {
+            width: 31px;
+            height: 31px;
+            display: grid;
+            place-items: center;
+            color: white;
+            background: var(--ink);
+            border-radius: 50%;
+            font-size: 10px;
+            font-weight: 700;
+        }
+
+        .profile strong {
+            display: block;
+            font-size: 12px;
+        }
+
+        .profile span {
+            display: block;
+            color: var(--muted);
+            font-size: 10px;
+        }
+
+        main {
+            min-width: 0;
+            padding: 30px clamp(24px, 5vw, 72px) 60px;
+        }
+
+        .topbar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 48px;
+        }
+
+        .crumb {
+            color: var(--muted);
+        }
+
+        .top-actions {
+            display: flex;
+            align-items: center;
+            gap: 13px;
+        }
+
+        .icon-button {
+            width: 38px;
+            height: 38px;
+            display: grid;
+            place-items: center;
+            color: var(--ink);
+            background: #fff;
+            border: 1px solid var(--line);
+            border-radius: 50%;
+            transition: transform .2s, background .2s;
+        }
+
+        .icon-button:hover {
+            background: var(--lime);
+            transform: rotate(12deg);
+        }
+
+        .invite {
+            padding: 12px 17px;
+            color: white;
+            background: var(--ink);
+            border-radius: 6px;
+            font-size: 11px;
+            font-weight: 700;
+            transition: transform .2s, box-shadow .2s;
+        }
+
+        .invite:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 9px 20px rgba(16, 35, 49, .18);
+        }
+
+        .view {
+            display: none;
+            animation: viewIn .6s both;
+        }
+
+        .view.active {
+            display: block;
+        }
+
+        .view-head {
+            display: flex;
+            align-items: end;
+            justify-content: space-between;
+            gap: 20px;
+            margin-bottom: 36px;
+        }
+
+        .eyebrow {
+            margin-bottom: 11px;
+            color: var(--coral);
+        }
+
+        h1,
+        h2,
+        h3,
+        p {
+            margin-top: 0;
+        }
+
+        h1 {
+            max-width: 700px;
+            margin-bottom: 13px;
+            font-size: clamp(34px, 5vw, 66px);
+            line-height: .98;
+            letter-spacing: -.075em;
+        }
+
+        h1 em {
+            font-style: normal;
+            color: #86b99d;
+        }
+
+        .lede {
+            max-width: 470px;
+            color: var(--muted);
+            font-size: 14px;
+            line-height: 1.7;
+        }
+
+        .date {
+            color: var(--muted);
+        }
+
+        .hero-grid {
+            display: grid;
+            grid-template-columns: 1.5fr 1fr;
+            gap: 18px;
+        }
+
+        .panel {
+            position: relative;
+            overflow: hidden;
+            border: 1px solid var(--line);
+            border-radius: 12px;
+            background: var(--panel);
+            box-shadow: var(--shadow);
+        }
+
+        .panel-pad {
+            padding: 26px;
+        }
+
+        .signal {
+            min-height: 270px;
+            padding: 30px;
+            background: var(--ink);
+            color: white;
+        }
+
+        .signal::after {
+            position: absolute;
+            right: -50px;
+            bottom: -110px;
+            width: 330px;
+            height: 330px;
+            border: 1px solid rgba(215, 255, 103, .35);
+            border-radius: 50%;
+            box-shadow: 0 0 0 30px rgba(215, 255, 103, .05), 0 0 0 60px rgba(215, 255, 103, .04);
+            content: '';
+        }
+
+        .signal .eyebrow {
+            color: var(--lime);
+        }
+
+        .signal h2 {
+            max-width: 420px;
+            margin-bottom: 33px;
+            font-size: 31px;
+            line-height: 1.04;
+            letter-spacing: -.06em;
+        }
+
+        .signal .arrow {
+            position: absolute;
+            right: 30px;
+            top: 30px;
+            width: 35px;
+            height: 35px;
+            display: grid;
+            place-items: center;
+            color: var(--ink);
+            background: var(--lime);
+            border-radius: 50%;
+            font-size: 18px;
+        }
+
+        .signal .meta {
+            position: absolute;
+            bottom: 28px;
+            color: rgba(255, 255, 255, .55);
+        }
+
+        .metrics {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1px;
+            background: var(--line);
+        }
+
+        .metric {
+            min-height: 134px;
+            padding: 22px;
+            background: rgba(255, 255, 255, .7);
+        }
+
+        .metric b {
+            display: block;
+            margin: 13px 0 5px;
+            font-size: 31px;
+            letter-spacing: -.07em;
+        }
+
+        .metric span {
+            color: var(--muted);
+            font-size: 11px;
+        }
+
+        .metric:nth-child(2) b {
+            color: #e87860;
+        }
+
+        .metric:nth-child(3) b {
+            color: #5c9cbb;
+        }
+
+        .metric:nth-child(4) b {
+            color: #89ad45;
+        }
+
+        .section-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin: 48px 0 17px;
+        }
+
+        h3 {
+            margin-bottom: 0;
+            font-size: 16px;
+            letter-spacing: -.03em;
+        }
+
+        .text-link {
+            color: var(--muted);
+            background: transparent;
+            font: 500 11px 'DM Mono', monospace;
+            text-transform: uppercase;
+        }
+
+        .text-link:hover {
+            color: var(--coral);
+        }
+
+        .opportunities {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 13px;
+        }
+
+        .opportunity {
+            padding: 20px;
+            background: white;
+            box-shadow: none;
+            transition: transform .3s, box-shadow .3s;
+        }
+
+        .opportunity:hover {
+            transform: translateY(-7px);
+            box-shadow: var(--shadow);
+        }
+
+        .opportunity-top {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 30px;
+        }
+
+        .company-logo {
+            width: 36px;
+            height: 36px;
+            display: grid;
+            place-items: center;
+            color: var(--ink);
+            background: var(--blue);
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 800;
+        }
+
+        .company-logo.orange {
+            background: var(--coral);
+        }
+
+        .company-logo.mint {
+            background: var(--mint);
+        }
+
+        .tag {
+            padding: 6px 8px;
+            color: var(--muted);
+            border: 1px solid var(--line);
+            border-radius: 4px;
+            font-size: 9px;
+        }
+
+        .opportunity h3 {
+            margin-bottom: 7px;
+            font-size: 15px;
+        }
+
+        .opportunity p {
+            min-height: 37px;
+            color: var(--muted);
+            font-size: 11px;
+            line-height: 1.6;
+        }
+
+        .opportunity-footer {
+            display: flex;
+            justify-content: space-between;
+            padding-top: 17px;
+            border-top: 1px solid var(--line);
+            color: var(--muted);
+            font-size: 10px;
+        }
+
+        .opportunity-footer b {
+            color: var(--ink);
+            font-weight: 700;
+        }
+
+        .network-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 18px;
+        }
+
+        .network-card {
+            padding: 23px;
+            background: white;
+        }
+
+        .network-card h3 {
+            margin-bottom: 21px;
+        }
+
+        .person {
+            display: flex;
+            align-items: center;
+            gap: 13px;
+            padding: 13px 0;
+            border-top: 1px solid var(--line);
+        }
+
+        .person .avatar {
+            flex: 0 0 35px;
+            background: var(--purple);
+            color: var(--ink);
+        }
+
+        .person:nth-child(3) .avatar {
+            background: var(--blue);
+        }
+
+        .person:nth-child(4) .avatar {
+            background: var(--coral);
+        }
+
+        .person strong {
+            display: block;
+            font-size: 12px;
+        }
+
+        .person span {
+            color: var(--muted);
+            font-size: 10px;
+        }
+
+        .person .connect {
+            margin-left: auto;
+            padding: 7px 10px;
+            color: var(--ink);
+            background: var(--paper);
+            border-radius: 4px;
+            font-size: 10px;
+        }
+
+        .person .connect:hover {
+            background: var(--lime);
+        }
+
+        .radar {
+            min-height: 297px;
+            display: grid;
+            place-items: center;
+            background: #e2f5ec;
+        }
+
+        .radar::before,
+        .radar::after {
+            position: absolute;
+            width: 170px;
+            height: 170px;
+            border: 1px solid rgba(86, 154, 127, .34);
+            border-radius: 50%;
+            content: '';
+        }
+
+        .radar::after {
+            width: 95px;
+            height: 95px;
+        }
+
+        .radar-grid {
+            position: absolute;
+            width: 220px;
+            height: 1px;
+            background: rgba(86, 154, 127, .3);
+            transform: rotate(45deg);
+        }
+
+        .radar-grid::after {
+            position: absolute;
+            width: 220px;
+            height: 1px;
+            background: rgba(86, 154, 127, .3);
+            transform: rotate(90deg);
+            content: '';
+        }
+
+        .radar-dot {
+            position: relative;
+            z-index: 1;
+            width: 13px;
+            height: 13px;
+            background: var(--coral);
+            border: 4px solid #e2f5ec;
+            border-radius: 50%;
+            box-shadow: 0 0 0 7px rgba(255, 141, 113, .22), 38px -40px 0 -2px var(--blue), -57px 31px 0 -4px var(--lime);
+            animation: radarPulse 2.8s ease-in-out infinite;
+        }
+
+        .radar-label {
+            position: absolute;
+            top: 20px;
+            left: 21px;
+            color: #64917e;
+        }
+
+        .workspace {
+            display: grid;
+            grid-template-columns: minmax(0, 1.35fr) minmax(280px, .65fr);
+            gap: 18px;
+        }
+
+        .timeline {
+            min-height: 510px;
+            padding: 27px;
+            background: white;
+        }
+
+        .timeline-line {
+            position: relative;
+            padding: 8px 0 0 26px;
+        }
+
+        .timeline-line::before {
+            position: absolute;
+            top: 15px;
+            bottom: 0;
+            left: 5px;
+            border-left: 1px dashed #b9c8c8;
+            content: '';
+        }
+
+        .event {
+            position: relative;
+            padding: 0 0 25px;
+        }
+
+        .event::before {
+            position: absolute;
+            top: 7px;
+            left: -26px;
+            width: 9px;
+            height: 9px;
+            background: var(--coral);
+            border: 4px solid white;
+            border-radius: 50%;
+            box-shadow: 0 0 0 1px var(--coral);
+            content: '';
+        }
+
+        .event:nth-child(2)::before {
+            background: var(--blue);
+            box-shadow: 0 0 0 1px var(--blue);
+        }
+
+        .event:nth-child(3)::before {
+            background: var(--lime);
+            box-shadow: 0 0 0 1px #b1ca50;
+        }
+
+        .event .mono {
+            color: var(--muted);
+        }
+
+        .event h3 {
+            margin: 8px 0 5px;
+        }
+
+        .event p {
+            margin: 0;
+            color: var(--muted);
+            font-size: 11px;
+        }
+
+        .focus {
+            min-height: 510px;
+            padding: 28px;
+            color: white;
+            background: #4d5d75;
+        }
+
+        .focus h2 {
+            margin: 50px 0 20px;
+            font-size: 29px;
+            line-height: 1;
+            letter-spacing: -.06em;
+        }
+
+        .focus .progress {
+            height: 4px;
+            margin-top: 28px;
+            background: rgba(255, 255, 255, .2);
+        }
+
+        .focus .progress i {
+            display: block;
+            width: 68%;
+            height: 100%;
+            background: var(--lime);
+            animation: progress 1.4s .3s both;
+        }
+
+        .workspace-tools {
+            display: grid;
+            grid-column: 1 / -1;
+            grid-template-columns: 1fr 1fr;
+            gap: 18px;
+        }
+
+        .tool-panel {
+            min-height: 245px;
+            padding: 24px;
+            background: #fff;
+        }
+
+        .tool-heading {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+            margin-bottom: 17px;
+        }
+
+        .tool-heading h3 {
+            margin: 0;
+        }
+
+        .tool-count {
+            color: var(--muted);
+            font: 500 10px 'DM Mono', monospace;
+        }
+
+        .task-list {
+            display: grid;
+            gap: 9px;
+        }
+
+        .task {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px 0;
+            border-top: 1px solid var(--line);
+            font-size: 11px;
+        }
+
+        .task input {
+            flex: 0 0 auto;
+            width: 15px;
+            height: 15px;
+            accent-color: var(--coral);
+        }
+
+        .task.is-complete span {
+            color: var(--muted);
+            text-decoration: line-through;
+        }
+
+        .task-form {
+            display: flex;
+            gap: 8px;
+            margin-top: 16px;
+        }
+
+        .task-form input {
+            min-width: 0;
+            padding: 9px 10px;
+            border: 1px solid var(--line);
+            border-radius: 4px;
+            outline: 0;
+            font-size: 11px;
+        }
+
+        .task-form input:focus {
+            border-color: #87b79a;
+            box-shadow: none;
+        }
+
+        .note-editor {
+            width: 100%;
+            min-height: 142px;
+            padding: 13px;
+            resize: vertical;
+            color: var(--ink);
+            background: var(--paper);
+            border: 1px solid var(--line);
+            border-radius: 5px;
+            outline: 0;
+            font: 12px/1.7 Manrope, sans-serif;
+        }
+
+        .note-editor:focus {
+            border-color: #87b79a;
+            box-shadow: 0 0 0 3px rgba(135, 183, 154, .15);
+        }
+
+        .note-status {
+            display: block;
+            margin-top: 8px;
+            color: var(--muted);
+            font-size: 9px;
+        }
+
+        .collaborators {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-top: 31px;
+        }
+
+        .collaborators .avatar {
+            width: 29px;
+            height: 29px;
+            margin-left: -5px;
+            border: 2px solid #4d5d75;
+        }
+
+        .collaborators .avatar:first-child {
+            margin-left: 0;
+        }
+
+        .collaborators span {
+            margin-left: 5px;
+            color: rgba(255, 255, 255, .65);
+            font-size: 10px;
+        }
+
+        .search-panel {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 15px 17px;
+            margin-bottom: 21px;
+            background: white;
+            border: 1px solid var(--line);
+            border-radius: 7px;
+        }
+
+        .search-panel input {
+            width: 100%;
+            color: var(--ink);
+            border: 0;
+            outline: 0;
+            background: transparent;
+            font-size: 13px;
+        }
+
+        .trajectory-panel {
+            display: grid;
+            grid-template-columns: 1.2fr .8fr;
+            gap: 24px;
+            padding: 24px;
+            margin-top: 32px;
+            background: #fff;
+        }
+
+        .trajectory-copy p {
+            max-width: 430px;
+            margin: 8px 0 0;
+            color: var(--muted);
+            font-size: 11px;
+            line-height: 1.6;
+        }
+
+        .trajectory-steps {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 8px;
+            align-items: end;
+        }
+
+        .trajectory-step {
+            min-height: 72px;
+            padding: 11px;
+            border-top: 3px solid var(--line);
+            background: var(--paper);
+            cursor: pointer;
+            transition: transform .2s, border-color .2s, background .2s;
+        }
+
+        .trajectory-step:hover,
+        .trajectory-step.is-done {
+            border-color: var(--coral);
+            background: #fff7f3;
+            transform: translateY(-3px);
+        }
+
+        .trajectory-step.is-done::after {
+            float: right;
+            color: #55a878;
+            content: '✓';
+            font-weight: 700;
+        }
+
+        .trajectory-step strong {
+            display: block;
+            margin-top: 8px;
+            font-size: 11px;
+        }
+
+        .trajectory-step span {
+            color: var(--muted);
+            font-size: 9px;
+        }
+
+        .action-button {
+            padding: 8px 11px;
+            color: var(--ink);
+            background: var(--lime);
+            border-radius: 4px;
+            font-size: 10px;
+            font-weight: 700;
+        }
+
+        .action-button:hover {
+            transform: translateY(-2px);
+        }
+
+        .save-button {
+            padding: 6px 8px;
+            color: var(--muted);
+            background: transparent;
+            border: 1px solid var(--line);
+            border-radius: 4px;
+            font-size: 10px;
+        }
+
+        .save-button.is-saved {
+            color: var(--ink);
+            background: var(--mint);
+            border-color: var(--mint);
+        }
+
+        .modal-backdrop {
+            position: fixed;
+            inset: 0;
+            z-index: 30;
+            display: grid;
+            place-items: center;
+            padding: 20px;
+            background: rgba(16, 35, 49, .42);
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity .25s, visibility .25s;
+        }
+
+        .modal-backdrop.is-open {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .modal {
+            width: min(100%, 510px);
+            padding: 28px;
+            background: #fff;
+            border-radius: 10px;
+            box-shadow: 0 28px 80px rgba(16, 35, 49, .25);
+            transform: translateY(12px);
+            transition: transform .25s;
+        }
+
+        .modal-backdrop.is-open .modal {
+            transform: translateY(0);
+        }
+
+        .modal-head {
+            display: flex;
+            align-items: start;
+            justify-content: space-between;
+            gap: 20px;
+        }
+
+        .modal h2 {
+            margin: 8px 0 9px;
+            font-size: 27px;
+            letter-spacing: -.06em;
+        }
+
+        .modal p {
+            color: var(--muted);
+            font-size: 12px;
+            line-height: 1.7;
+        }
+
+        .modal-close {
+            width: 30px;
+            height: 30px;
+            color: var(--muted);
+            background: var(--paper);
+            border-radius: 50%;
+        }
+
+        .modal-actions {
+            display: flex;
+            gap: 10px;
+            margin-top: 24px;
+        }
+
+        .application-actions.is-hidden,
+        .resume-step {
+            display: none;
+        }
+
+        .resume-step.is-visible {
+            display: block;
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 1px solid var(--line);
+        }
+
+        .resume-step label {
+            display: block;
+            margin-bottom: 8px;
+            color: var(--muted);
+            font: 500 10px 'DM Mono', monospace;
+            letter-spacing: .06em;
+            text-transform: uppercase;
+        }
+
+        .resume-drop {
+            display: block;
+            padding: 17px;
+            color: var(--muted);
+            background: var(--paper);
+            border: 1px dashed #9db7aa;
+            border-radius: 5px;
+            font-size: 11px;
+            text-align: center;
+            cursor: pointer;
+        }
+
+        .resume-drop:hover {
+            color: var(--ink);
+            border-color: var(--coral);
+        }
+
+        .resume-drop input {
+            display: none;
+        }
+
+        .resume-file-name {
+            display: block;
+            margin-top: 8px;
+            color: var(--muted);
+            font-size: 10px;
+        }
+
+        .resume-error {
+            min-height: 16px;
+            margin: 9px 0 0;
+            color: #c55b48;
+            font-size: 10px;
+        }
+
+        .resume-submit {
+            width: 100%;
+            margin-top: 10px;
+        }
+
+        .toast {
+            position: fixed;
+            right: 24px;
+            bottom: 24px;
+            z-index: 40;
+            max-width: min(360px, calc(100vw - 32px));
+            padding: 13px 16px;
+            color: white;
+            background: var(--ink);
+            border-left: 4px solid var(--lime);
+            border-radius: 5px;
+            box-shadow: var(--shadow);
+            font-size: 11px;
+            opacity: 0;
+            transform: translateY(12px);
+            pointer-events: none;
+            transition: opacity .25s, transform .25s;
+        }
+
+        .toast.is-visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .filter {
+            padding: 9px 11px;
+            color: var(--muted);
+            background: var(--paper);
+            border-radius: 4px;
+            font-size: 10px;
+            white-space: nowrap;
+        }
+
+        @keyframes viewIn {
+            from {
+                opacity: 0;
+                transform: translateY(12px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes pulse {
+            70% {
+                box-shadow: 0 0 0 7px rgba(84, 216, 140, 0);
+            }
+
+            100% {
+                box-shadow: 0 0 0 0 rgba(84, 216, 140, 0);
+            }
+        }
+
+        @keyframes radarPulse {
+            50% {
+                transform: scale(1.3);
+            }
+        }
+
+        @keyframes progress {
+            from {
+                width: 0;
+            }
+
+            to {
+                width: 68%;
+            }
+        }
+
+        @media (max-width: 900px) {
+            .shell {
+                grid-template-columns: 76px 1fr;
+            }
+
+            aside {
+                padding: 24px 13px;
+            }
+
+            .brand {
+                margin: 0 auto 55px;
+            }
+
+            .brand>strong,
+            .nav-label,
+            .nav-item span:not(.nav-icon),
+            .status,
+            .profile strong,
+            .profile span {
+                display: none;
+            }
+
+            .nav-item {
+                justify-content: center;
+                padding: 14px 8px;
+            }
+
+            .nav-item.active::before {
+                left: -13px;
+            }
+
+            .profile {
+                justify-content: center;
+            }
+
+            .hero-grid,
+            .network-grid,
+            .workspace,
+            .trajectory-panel {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 600px) {
+            main {
+                padding: 22px 16px 40px;
+            }
+
+            .topbar {
+                margin-bottom: 35px;
+            }
+
+            .invite {
+                padding: 10px;
+                font-size: 0;
+            }
+
+            .invite::after {
+                content: '+';
+                font-size: 18px;
+            }
+
+            .view-head {
+                display: block;
+                margin-bottom: 27px;
+            }
+
+            h1 {
+                font-size: 43px;
+            }
+
+            .date {
+                margin-top: 17px;
+            }
+
+            .opportunities {
+                grid-template-columns: 1fr;
+            }
+
+            .signal {
+                min-height: 240px;
+            }
+
+            .signal h2 {
+                font-size: 27px;
+            }
+
+            .section-row {
+                margin-top: 32px;
+            }
+
+            .trajectory-steps {
+                grid-template-columns: 1fr;
+            }
+
+            .workspace-tools {
+                grid-template-columns: 1fr;
+            }
+
+            .modal-actions {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="shell">
+        <aside>
+            <div>
+                <div class="brand">
+                    <div class="brand-mark"><span>✦</span></div><strong>acadimia</strong>
+                </div>
+                <div class="nav-label mono">Portal / 01</div>
+                <nav aria-label="Primary navigation">
+                    <button class="nav-item active" data-view="overview"><span
+                            class="nav-icon">⌂</span><span>Overview</span></button>
+                    <button class="nav-item" data-view="opportunities"><span
+                            class="nav-icon">↗</span><span>Opportunities</span></button>
+                    <button class="nav-item" data-view="network"><span class="nav-icon">◎</span><span>My
+                            network</span></button>
+                    <button class="nav-item" data-view="workspace"><span
+                            class="nav-icon">▦</span><span>Workspace</span></button>
+                    <a class="nav-item" href="resuem.html" aria-label="Resume lab"><span
+                            class="nav-icon">↥</span><span>Resume lab</span></a>
+                </nav>
+            </div>
+            <div class="side-foot">
+                <div class="status"><i class="pulse"></i><span>Systems online</span></div>
+                <div class="profile">
+                    <div class="avatar">AK</div>
+                    <div><strong>Alex Kim</strong><span>Student · Computer Science</span></div>
+                </div>
+            </div>
+        </aside>
+
+        <main>
+            <header class="topbar">
+                <div class="crumb mono">Acadimia / <span id="crumb-view">Overview</span></div>
+                <div class="top-actions"><button class="icon-button" aria-label="Notifications">♧</button><button
+                        class="invite">+ Invite a collaborator</button></div>
+            </header>
+
+            <section class="view active" id="overview">
+                <div class="view-head">
+                    <div>
+                        <div class="eyebrow mono">Good morning, Alex</div>
+                        <h1>Shape what comes <em>next.</em></h1>
+                        <p class="lede">Your academic signal is strong this week. Three new teams are looking for the
+                            way you think.</p>
+                    </div>
+                    <div class="date mono">THU / 09.09.26</div>
+                </div>
+                <div class="hero-grid">
+                    <article class="panel signal">
+                        <div class="eyebrow mono">Signal detected / 03</div>
+                        <h2>Climate systems need a new kind of engineer.</h2>
+                        <div class="arrow">↗</div>
+                        <div class="meta mono">Open brief · Helio Labs</div>
+                    </article>
+                    <div class="panel metrics">
+                        <div class="metric"><span class="mono">Profile signal</span><b>86%</b><span>+12% this
+                                month</span></div>
+                        <div class="metric"><span class="mono">New matches</span><b>07</b><span>Since Monday</span>
+                        </div>
+                        <div class="metric"><span class="mono">Network reach</span><b>42</b><span>Active
+                                connections</span></div>
+                        <div class="metric"><span class="mono">Profile views</span><b>128</b><span>+24% this week</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="section-row">
+                    <h3>Recommended for your trajectory</h3><button class="text-link"
+                        data-view-link="opportunities">View all ↗</button>
+                </div>
+                <div class="opportunities">
+                    <article class="panel opportunity" data-opportunity="materials">
+                        <div class="opportunity-top">
+                            <div class="company-logo">H</div><span class="tag">Research · 4 wk</span>
+                        </div>
+                        <h3>Materials Intelligence</h3>
+                        <p>Help model low-impact materials with a team at Helio Labs.</p>
+                        <div class="opportunity-footer"><span>92% match</span><button class="save-button"
+                                data-save="materials">Save</button><button class="action-button"
+                                data-open-opportunity="materials">Explore →</button></div>
+                    </article>
+                    <article class="panel opportunity" data-opportunity="urban">
+                        <div class="opportunity-top">
+                            <div class="company-logo orange">N</div><span class="tag">Internship · Paid</span>
+                        </div>
+                        <h3>Urban Data Fellow</h3>
+                        <p>Turn city-scale data into more livable neighbourhoods.</p>
+                        <div class="opportunity-footer"><span>84% match</span><button class="save-button"
+                                data-save="urban">Save</button><button class="action-button"
+                                data-open-opportunity="urban">Explore →</button></div>
+                    </article>
+                    <article class="panel opportunity" data-opportunity="ocean">
+                        <div class="opportunity-top">
+                            <div class="company-logo mint">O</div><span class="tag">Challenge · Team</span>
+                        </div>
+                        <h3>Ocean / 2030</h3>
+                        <p>A global challenge for builders who think beyond the brief.</p>
+                        <div class="opportunity-footer"><span>78% match</span><button class="save-button"
+                                data-save="ocean">Save</button><button class="action-button"
+                                data-open-opportunity="ocean">Explore →</button></div>
+                    </article>
+                </div>
+                <article class="panel trajectory-panel">
+                    <div class="trajectory-copy">
+                        <div class="eyebrow mono">Trajectory / next 30 days</div>
+                        <h3>Turn a strong signal into momentum.</h3>
+                        <p>Complete the next small step in your path. Your progress is saved on this device and shapes
+                            future recommendations.</p>
+                        <button class="action-button" data-view-link="workspace" style="margin-top: 18px">Open workspace
+                            →</button>
+                    </div>
+                    <div class="trajectory-steps" aria-label="Trajectory progress">
+                        <button class="trajectory-step" data-step="signal"><span class="mono">01 /
+                                Discover</span><strong>Choose a brief</strong></button>
+                        <button class="trajectory-step" data-step="connect"><span class="mono">02 /
+                                Connect</span><strong>Meet one person</strong></button>
+                        <button class="trajectory-step" data-step="build"><span class="mono">03 /
+                                Build</span><strong>Share a first idea</strong></button>
+                    </div>
+                </article>
+            </section>
+
+            <section class="view" id="opportunities">
+                <div class="view-head">
+                    <div>
+                        <div class="eyebrow mono">The open field</div>
+                        <h1>Find your <em>next</em> proving ground.</h1>
+                        <p class="lede">Curated briefs, placements, and challenges matched to the work you want to do.
+                        </p>
+                    </div>
+                </div>
+                <div class="search-panel"><span>⌕</span><input aria-label="Search opportunities"
+                        placeholder="Search by skill, sector or ambition" /><button class="filter">All signals
+                        ▾</button></div>
+                <div class="opportunities">
+                    <article class="panel opportunity" data-opportunity="materials">
+                        <div class="opportunity-top">
+                            <div class="company-logo">H</div><span class="tag">Research · 4 wk</span>
+                        </div>
+                        <h3>Materials Intelligence</h3>
+                        <p>Model low-impact materials with Helio Labs.</p>
+                        <div class="opportunity-footer"><span>92% match</span><button class="save-button"
+                                data-save="materials">Save</button><button class="action-button"
+                                data-open-opportunity="materials">Explore →</button></div>
+                    </article>
+                    <article class="panel opportunity" data-opportunity="urban">
+                        <div class="opportunity-top">
+                            <div class="company-logo orange">N</div><span class="tag">Internship · Paid</span>
+                        </div>
+                        <h3>Urban Data Fellow</h3>
+                        <p>Turn city-scale data into more livable places.</p>
+                        <div class="opportunity-footer"><span>84% match</span><button class="save-button"
+                                data-save="urban">Save</button><button class="action-button"
+                                data-open-opportunity="urban">Explore →</button></div>
+                    </article>
+                    <article class="panel opportunity" data-opportunity="ocean">
+                        <div class="opportunity-top">
+                            <div class="company-logo mint">O</div><span class="tag">Challenge · Team</span>
+                        </div>
+                        <h3>Ocean / 2030</h3>
+                        <p>Build solutions for the next era of ocean health.</p>
+                        <div class="opportunity-footer"><span>78% match</span><button class="save-button"
+                                data-save="ocean">Save</button><button class="action-button"
+                                data-open-opportunity="ocean">Explore →</button></div>
+                    </article>
+                </div>
+            </section>
+
+            <section class="view" id="network">
+                <div class="view-head">
+                    <div>
+                        <div class="eyebrow mono">Human infrastructure</div>
+                        <h1>People are the <em>portal.</em></h1>
+                        <p class="lede">The right conversation can move an idea further than a perfect application.</p>
+                    </div>
+                </div>
+                <div class="network-grid">
+                    <article class="panel network-card">
+                        <h3>Suggested connections</h3>
+                        <div class="person">
+                            <div class="avatar">MR</div>
+                            <div><strong>Maya Rios</strong><span>Product Research · Northstar</span></div><button
+                                class="connect">Connect</button>
+                        </div>
+                        <div class="person">
+                            <div class="avatar">JT</div>
+                            <div><strong>Jules Tan</strong><span>PhD Candidate · Urban Systems</span></div><button
+                                class="connect">Connect</button>
+                        </div>
+                        <div class="person">
+                            <div class="avatar">SO</div>
+                            <div><strong>Sam Okafor</strong><span>Climate Data · Helio Labs</span></div><button
+                                class="connect">Connect</button>
+                        </div>
+                    </article>
+                    <article class="panel radar">
+                        <div class="radar-label mono">Your network / live</div>
+                        <div class="radar-grid"></div>
+                        <div class="radar-dot"></div>
+                    </article>
+                </div>
+            </section>
+
+            <section class="view" id="workspace">
+                <div class="view-head">
+                    <div>
+                        <div class="eyebrow mono">Your working orbit</div>
+                        <h1>Make the idea <em>real.</em></h1>
+                        <p class="lede">A quiet place for the briefs, people, and momentum you want to keep close.</p>
+                    </div>
+                </div>
+                <div class="workspace">
+                    <article class="panel timeline">
+                        <h3>Activity timeline</h3>
+                        <div class="timeline-line">
+                            <div class="event">
+                                <div class="mono">Today · 09:40</div>
+                                <h3>Helio Labs viewed your profile</h3>
+                                <p>Your materials intelligence signal is resonating.</p>
+                            </div>
+                            <div class="event">
+                                <div class="mono">Yesterday · 16:20</div>
+                                <h3>You joined Ocean / 2030</h3>
+                                <p>Challenge workspace is ready for your first contribution.</p>
+                            </div>
+                            <div class="event">
+                                <div class="mono">08 Sep · 11:05</div>
+                                <h3>Profile signal improved</h3>
+                                <p>Adding your project raised your match quality by 12%.</p>
+                            </div>
+                        </div>
+                    </article>
+                    <article class="panel focus">
+                        <div class="mono">Featured workspace / 01</div>
+                        <h2>Ocean / 2030</h2>
+                        <p>Global challenge · 18 contributors</p>
+                        <div class="progress"><i></i></div>
+                        <div class="mono" style="margin-top: 12px; color: rgba(255,255,255,.6)">Brief progress / 68%
+                        </div>
+                        <div class="collaborators">
+                            <div class="avatar" style="background: var(--coral); color: var(--ink)">MR</div>
+                            <div class="avatar" style="background: var(--blue); color: var(--ink)">SO</div>
+                            <div class="avatar" style="background: var(--lime); color: var(--ink)">JT</div>
+                            <span>+15 collaborators active</span>
+                        </div>
+                    </article>
+                    <div class="workspace-tools">
+                        <article class="panel tool-panel">
+                            <div class="tool-heading">
+                                <h3>Deliverables</h3><span class="tool-count" id="task-count">1 / 3 done</span>
+                            </div>
+                            <div class="task-list" id="task-list">
+                                <label class="task is-complete"><input type="checkbox" checked /><span>Read the Ocean /
+                                        2030 brief</span></label>
+                                <label class="task"><input type="checkbox" /><span>Post one observation to the
+                                        team</span></label>
+                                <label class="task"><input type="checkbox" /><span>Invite a domain
+                                        collaborator</span></label>
+                            </div>
+                            <form class="task-form" id="task-form">
+                                <input id="task-input" placeholder="Add a deliverable" aria-label="Add a deliverable" />
+                                <button class="action-button" type="submit">Add</button>
+                            </form>
+                        </article>
+                        <article class="panel tool-panel">
+                            <div class="tool-heading">
+                                <h3>Working note</h3><span class="tool-count">Autosaved</span>
+                            </div>
+                            <textarea class="note-editor" id="workspace-note" aria-label="Working note"
+                                placeholder="Capture the idea you want to bring to the next conversation..."></textarea>
+                            <span class="note-status" id="note-status">Nothing new yet</span>
+                        </article>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+    <div class="modal-backdrop" id="opportunity-modal" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+        <article class="modal">
+            <div class="modal-head">
+                <div>
+                    <div class="eyebrow mono" id="modal-tag">Recommended brief</div>
+                    <h2 id="modal-title">Materials Intelligence</h2>
+                </div>
+                <button class="modal-close" aria-label="Close opportunity">×</button>
+            </div>
+            <p id="modal-copy">Explore a focused project matched to your materials intelligence signal.</p>
+            <div class="modal-actions application-actions" id="application-actions">
+                <button class="action-button" id="modal-apply">Start application →</button>
+                <button class="save-button" id="modal-save">Save for later</button>
+            </div>
+            <div class="resume-step" id="resume-step">
+                <label for="resume-input">Upload your resume to continue</label>
+                <label class="resume-drop" for="resume-input">Choose PDF, DOC, DOCX, or TXT · maximum 10 MB<input
+                        id="resume-input" type="file"
+                        accept=".pdf,.doc,.docx,.txt,application/pdf,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document,text/plain" /></label>
+                <span class="resume-file-name" id="resume-file-name">No resume selected</span>
+                <p class="resume-error" id="resume-error" role="alert"></p>
+                <button class="action-button resume-submit" id="resume-submit" disabled>Submit application →</button>
+            </div>
+        </article>
+    </div>
+    <div class="toast" id="toast" role="status"></div>
+    <script>
+        const navItems = document.querySelectorAll('.nav-item');
+        const views = document.querySelectorAll('.view');
+        const crumb = document.querySelector('#crumb-view');
+        const modal = document.querySelector('#opportunity-modal');
+        const toast = document.querySelector('#toast');
+        const opportunityDetails = {
+            materials: { title: 'Materials Intelligence', tag: 'Research · 4 wk · 92% match', copy: 'Help Helio Labs model low-impact materials and turn your systems thinking into a practical research contribution.' },
+            urban: { title: 'Urban Data Fellow', tag: 'Internship · Paid · 84% match', copy: 'Turn city-scale data into more livable places with a small team working across mobility, housing, and public space.' },
+            ocean: { title: 'Ocean / 2030', tag: 'Challenge · Team · 78% match', copy: 'Join a global challenge for builders who think beyond the brief and contribute your first idea to an active team.' }
+        };
+
+        function showView(viewName) {
+            views.forEach((view) => view.classList.toggle('active', view.id === viewName));
+            navItems.forEach((item) => item.classList.toggle('active', item.dataset.view === viewName));
+            const activeNav = [...navItems].find((item) => item.dataset.view === viewName);
+            crumb.textContent = activeNav?.querySelector('span:last-child')?.textContent || viewName;
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function showToast(message) {
+            toast.textContent = message;
+            toast.classList.add('is-visible');
+            clearTimeout(showToast.timer);
+            showToast.timer = setTimeout(() => toast.classList.remove('is-visible'), 2800);
+        }
+
+        function openOpportunity(id) {
+            const detail = opportunityDetails[id];
+            if (!detail) return;
+            modal.dataset.opportunity = id;
+            document.querySelector('#modal-title').textContent = detail.title;
+            document.querySelector('#modal-tag').textContent = detail.tag;
+            document.querySelector('#modal-copy').textContent = detail.copy;
+            const saved = JSON.parse(localStorage.getItem('acadimia-saved') || '[]').includes(id);
+            document.querySelector('#modal-save').textContent = saved ? 'Saved ✓' : 'Save for later';
+            document.querySelector('#modal-save').classList.toggle('is-saved', saved);
+            document.querySelector('#application-actions').classList.remove('is-hidden');
+            document.querySelector('#resume-step').classList.remove('is-visible');
+            document.querySelector('#resume-input').value = '';
+            document.querySelector('#resume-file-name').textContent = 'No resume selected';
+            document.querySelector('#resume-error').textContent = '';
+            document.querySelector('#resume-submit').disabled = true;
+            modal.classList.add('is-open');
+        }
+
+        function setSaved(id) {
+            const saved = new Set(JSON.parse(localStorage.getItem('acadimia-saved') || '[]'));
+            saved.has(id) ? saved.delete(id) : saved.add(id);
+            localStorage.setItem('acadimia-saved', JSON.stringify([...saved]));
+            document.querySelectorAll(`[data-save="${id}"]`).forEach((button) => {
+                button.classList.toggle('is-saved', saved.has(id));
+                button.textContent = saved.has(id) ? 'Saved ✓' : 'Save';
+            });
+            const modalSave = document.querySelector('#modal-save');
+            if (modal.dataset.opportunity === id) {
+                modalSave.classList.toggle('is-saved', saved.has(id));
+                modalSave.textContent = saved.has(id) ? 'Saved ✓' : 'Save for later';
+            }
+            showToast(saved.has(id) ? 'Saved to your trajectory.' : 'Removed from saved opportunities.');
+        }
+
+        navItems.forEach((item) => item.addEventListener('click', () => { if (item.dataset.view) showView(item.dataset.view); }));
+        document.querySelectorAll('[data-view-link]').forEach((link) => link.addEventListener('click', () => showView(link.dataset.viewLink)));
+        document.querySelectorAll('[data-open-opportunity]').forEach((button) => button.addEventListener('click', () => openOpportunity(button.dataset.openOpportunity)));
+        document.querySelectorAll('[data-save]').forEach((button) => button.addEventListener('click', () => setSaved(button.dataset.save)));
+        document.querySelectorAll('.trajectory-step').forEach((step) => {
+            const key = `acadimia-step-${step.dataset.step}`;
+            step.classList.toggle('is-done', localStorage.getItem(key) === 'done');
+            step.addEventListener('click', () => {
+                const done = step.classList.toggle('is-done');
+                localStorage.setItem(key, done ? 'done' : 'open');
+                showToast(done ? 'Trajectory step completed.' : 'Trajectory step reopened.');
+            });
+        });
+        const taskList = document.querySelector('#task-list');
+        const taskCount = document.querySelector('#task-count');
+        const noteEditor = document.querySelector('#workspace-note');
+        const noteStatus = document.querySelector('#note-status');
+        const storedTasks = JSON.parse(localStorage.getItem('acadimia-tasks') || 'null');
+        function addTaskElement(text, done = false) {
+            const task = document.createElement('label');
+            const checkbox = document.createElement('input');
+            const label = document.createElement('span');
+            task.className = 'task';
+            checkbox.type = 'checkbox';
+            checkbox.checked = done;
+            label.textContent = text;
+            task.append(checkbox, label);
+            task.classList.toggle('is-complete', done);
+            taskList.append(task);
+        }
+        if (storedTasks) {
+            taskList.replaceChildren();
+            storedTasks.forEach(({ text, done }) => addTaskElement(text, done));
+        }
+        noteEditor.value = localStorage.getItem('acadimia-note') || '';
+        function updateTasks() {
+            const tasks = [...taskList.querySelectorAll('.task')];
+            const done = tasks.filter((task) => task.querySelector('input').checked).length;
+            taskCount.textContent = `${done} / ${tasks.length} done`;
+            localStorage.setItem('acadimia-tasks', JSON.stringify(tasks.map((task) => ({ text: task.querySelector('span').textContent, done: task.querySelector('input').checked }))));
+            tasks.forEach((task) => task.classList.toggle('is-complete', task.querySelector('input').checked));
+        }
+        taskList.addEventListener('change', updateTasks);
+        document.querySelector('#task-form').addEventListener('submit', (event) => {
+            event.preventDefault();
+            const input = document.querySelector('#task-input');
+            const text = input.value.trim();
+            if (!text) return;
+            addTaskElement(text);
+            input.value = '';
+            updateTasks();
+            showToast('Deliverable added to your workspace.');
+        });
+        updateTasks();
+        noteEditor.addEventListener('input', () => {
+            localStorage.setItem('acadimia-note', noteEditor.value);
+            noteStatus.textContent = 'Saved just now';
+        });
+        const searchInput = document.querySelector('.search-panel input');
+        searchInput.addEventListener('input', () => {
+            const query = searchInput.value.toLowerCase().trim();
+            document.querySelectorAll('#opportunities .opportunity').forEach((card) => {
+                card.hidden = query && !card.textContent.toLowerCase().includes(query);
+            });
+        });
+        document.querySelectorAll('.connect').forEach((button) => button.addEventListener('click', () => {
+            button.textContent = button.textContent === 'Connected' ? 'Connect' : 'Connected';
+            button.classList.toggle('is-saved');
+            showToast(button.textContent === 'Connected' ? 'Connection request sent.' : 'Connection request withdrawn.');
+        }));
+        document.querySelector('.invite').addEventListener('click', () => showToast('Invite link copied to your clipboard.'));
+        document.querySelector('.icon-button').addEventListener('click', (event) => {
+            event.currentTarget.textContent = event.currentTarget.textContent === '♧' ? '✓' : '♧';
+            event.currentTarget.style.background = 'var(--lime)';
+            showToast(event.currentTarget.textContent === '✓' ? 'All caught up.' : 'Notifications marked unread.');
+        });
+        document.querySelector('.modal-close').addEventListener('click', () => modal.classList.remove('is-open'));
+        modal.addEventListener('click', (event) => { if (event.target === modal) modal.classList.remove('is-open'); });
+        document.querySelector('#modal-save').addEventListener('click', () => setSaved(modal.dataset.opportunity));
+        const resumeInput = document.querySelector('#resume-input');
+        const resumeSubmit = document.querySelector('#resume-submit');
+        resumeInput.addEventListener('change', () => {
+            const file = resumeInput.files[0];
+            const error = document.querySelector('#resume-error');
+            const allowed = ['application/pdf', 'application/msword', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document', 'text/plain'];
+            const valid = file && file.size <= 10 * 1024 * 1024 && (allowed.includes(file.type) || /\.(pdf|docx?|txt)$/i.test(file.name));
+            error.textContent = valid ? '' : 'Choose a PDF, DOC, DOCX, or TXT file under 10 MB.';
+            document.querySelector('#resume-file-name').textContent = valid ? `${file.name} · ${(file.size / 1024 / 1024).toFixed(2)} MB` : 'No resume selected';
+            resumeSubmit.disabled = !valid;
+        });
+        document.querySelector('#modal-apply').addEventListener('click', () => {
+            document.querySelector('#application-actions').classList.add('is-hidden');
+            document.querySelector('#resume-step').classList.add('is-visible');
+        });
+        resumeSubmit.addEventListener('click', () => {
+            const savedApplications = JSON.parse(localStorage.getItem('acadimia-applications') || '[]');
+            savedApplications.push({ opportunity: modal.dataset.opportunity, resume: resumeInput.files[0].name, submittedAt: new Date().toISOString() });
+            localStorage.setItem('acadimia-applications', JSON.stringify(savedApplications));
+            modal.classList.remove('is-open');
+            showToast('Application submitted with your resume.');
+            showView('workspace');
+        });
+        document.addEventListener('keydown', (event) => { if (event.key === 'Escape') modal.classList.remove('is-open'); });
+        const savedOpportunities = new Set(JSON.parse(localStorage.getItem('acadimia-saved') || '[]'));
+        savedOpportunities.forEach((id) => document.querySelectorAll(`[data-save="${id}"]`).forEach((button) => {
+            button.classList.add('is-saved');
+            button.textContent = 'Saved ✓';
+        }));
+    </script>
+</body>
+
+</html>
