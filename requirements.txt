@@ -1,6 +1,3 @@
-pdfplumber
-spacy
-sentence-transformers
 fastapi
 uvicorn
-python-multipart
+pydantic
