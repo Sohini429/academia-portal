@@ -1,0 +1,67 @@
+{
+  "SKL-101": {
+    "skill_name": "Python",
+    "questions": [
+      {
+        "question": "Which symbol is used to start a comment in Python?",
+        "options": ["//", "#", "<!--", "**"],
+        "correct_index": 1
+      },
+      {
+        "question": "What does len([1, 2, 3]) return?",
+        "options": ["1", "2", "3", "Error"],
+        "correct_index": 2
+      },
+      {
+        "question": "Which keyword is used to define a function in Python?",
+        "options": ["func", "function", "def", "define"],
+        "correct_index": 2
+      }
+    ]
+  },
+  "SKL-103": {
+    "skill_name": "SQL",
+    "questions": [
+      {
+        "question": "Which SQL keyword is used to retrieve data from a table?",
+        "options": ["GET", "SELECT", "FETCH", "SHOW"],
+        "correct_index": 1
+      },
+      {
+        "question": "Which clause is used to filter rows in SQL?",
+        "options": ["FILTER", "WHERE", "HAVING ONLY", "LIMIT"],
+        "correct_index": 1
+      },
+      {
+        "question": "What does SQL stand for?",
+        "options": [
+          "Structured Query Language",
+          "Simple Question Language",
+          "Sequential Query Logic",
+          "Server Query Language"
+        ],
+        "correct_index": 0
+      }
+    ]
+  },
+  "SKL-104": {
+    "skill_name": "React.js",
+    "questions": [
+      {
+        "question": "What is used to manage state in a React functional component?",
+        "options": ["useState", "setState()", "React.state", "this.state"],
+        "correct_index": 0
+      },
+      {
+        "question": "What do you call a reusable piece of UI in React?",
+        "options": ["Widget", "Component", "Module", "Element"],
+        "correct_index": 1
+      },
+      {
+        "question": "What syntax extension does React commonly use to write UI?",
+        "options": ["XML", "JSX", "YAML", "JSP"],
+        "correct_index": 1
+      }
+    ]
+  }
+}
